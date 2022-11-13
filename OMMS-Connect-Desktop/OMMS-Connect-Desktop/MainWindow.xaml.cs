@@ -14,6 +14,8 @@ using WinRT;
 using Microsoft.UI.Xaml.Media;
 using OMMSClientCoreCSharp;
 using OMMSClientCoreCSharp.Session;
+using ABI.System;
+using Exception = System.Exception;
 
 namespace OMMS_Connect_Desktop;
 
@@ -144,6 +146,7 @@ public sealed partial class MainWindow : Window
             SessionClient session = InitialSessionClient.Connect(textIP.Text, Int32.Parse(textPort.Text),
                 Int32.Parse(textCode.Password));
             session.Close();
+            new MessageBox().setContent("YOU SUCK", "Login Successfully\n\\o/").Activate();
         }
         catch (Exception exception)
         {
