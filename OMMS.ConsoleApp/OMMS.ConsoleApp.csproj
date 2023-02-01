@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Natsurainko.Toolkits" Version="1.0.4" />
+    <PackageReference Include="Tcp.NET.Client" Version="6.0.40" />
+    <PackageReference Include="Tcp.NET.Core" Version="6.0.40" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OMMS.Core\OMMS.Core.csproj" />
+  </ItemGroup>
+
+</Project>
