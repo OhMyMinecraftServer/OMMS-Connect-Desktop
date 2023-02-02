@@ -9,7 +9,7 @@
     xmlns:winuiex="using:WinUIEx"
     mc:Ignorable="d">
 
-    <Grid>
+    <Grid Loaded="Grid_Loaded">
         <Grid.DataContext>
             <vm:MainWindow />
         </Grid.DataContext>
@@ -18,7 +18,14 @@
             <RowDefinition Height="1" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
-        <Grid Background="#24292e" />
+        <Grid Background="#24292e">
+            <TextBlock
+                Margin="10,0"
+                VerticalAlignment="Center"
+                FontSize="12"
+                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                Text="OMMS.Desktop" />
+        </Grid>
         <Border
             Grid.Row="1"
             Background="#141414"
@@ -30,7 +37,7 @@
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="400" />
+                <ColumnDefinition Width="425" />
                 <ColumnDefinition Width="1" />
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
@@ -61,6 +68,7 @@
                     VerticalContentAlignment="Stretch"
                     Background="Transparent"
                     BorderBrush="Transparent"
+                    Command="{Binding ConnectButtonCommand}"
                     CornerRadius="0">
                     <Grid>
                         <StackPanel
@@ -74,7 +82,7 @@
                                     Margin="0,-2.5,0,0"
                                     FontSize="12"
                                     Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                                    Text="Disconnected" />
+                                    Text="{Binding ConnectState}" />
                             </StackPanel>
                         </StackPanel>
                     </Grid>
@@ -88,10 +96,9 @@
             <Grid
                 Grid.Row="2"
                 Grid.Column="0"
-                Background="#24292e"
-                DataContext="{Binding SystemInfo}">
-                <ScrollViewer>
-                    <StackPanel Padding="10,15,10,7.5">
+                Background="#24292e">
+                <ScrollViewer Visibility="{Binding SystemInfo, Converter={ThemeResource NullVisibilityConverter}}">
+                    <StackPanel Padding="10,15,10,7.5" DataContext="{Binding SystemInfo}">
                         <Button
                             Padding="0"
                             HorizontalAlignment="Stretch"
@@ -279,7 +286,6 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-
                     </StackPanel>
                 </ScrollViewer>
             </Grid>
@@ -317,7 +323,7 @@
                                 <TextBlock
                                     Margin="0,-5,0,0"
                                     FontWeight="SemiBold"
-                                    Text="ruogu-srever-x79" />
+                                    Text="{Binding CurrentConnectionName}" />
                             </StackPanel>
                         </StackPanel>
                         <FontIcon
@@ -343,6 +349,7 @@
                         HorizontalAlignment="Right"
                         Background="#2f363d"
                         BorderBrush="#141414"
+                        Command="{Binding AddConnectionConfigCommand}"
                         FontSize="13">
                         <Button.Resources>
                             <SolidColorBrush x:Key="ButtonBorderBrushPointerOver">White</SolidColorBrush>
@@ -353,7 +360,11 @@
                             <TextBlock Margin="5,0,0,0" Text="Add" />
                         </StackPanel>
                     </Button>
-                    <ListBox Grid.Row="1" Background="Transparent">
+                    <ListBox
+                        Grid.Row="1"
+                        Background="Transparent"
+                        ItemsSource="{Binding ConnectionConfigs}"
+                        SelectedItem="{Binding CurrentConnectionConfig, Mode=TwoWay}">
                         <ListBox.ItemContainerStyle>
                             <Style BasedOn="{StaticResource DefaultListBoxItemStyle}" TargetType="ListBoxItem">
                                 <Setter Property="MinHeight" Value="0" />
@@ -371,12 +382,10 @@
                                         Margin="10,0"
                                         FontSize="16"
                                         Glyph="&#xe977;" />
-                                    <TextBlock VerticalAlignment="Center" Text="ruogu-srever-x79" />
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding DisplayName}" />
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
-                        <x:String>A</x:String>
-                        <x:String>A</x:String>
                     </ListBox>
                 </Grid>
             </Grid>

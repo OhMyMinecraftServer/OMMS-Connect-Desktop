@@ -42,21 +42,26 @@ public class OMMSCentralClient :IDisposable
             isSSL: false));
     }
 
-    public async Task Connect()
+    public async Task<bool> Connect()
     {
-        await TcpClient.ConnectAsync();
+        var success = await TcpClient.ConnectAsync();
+
+        if (!success)
+            return false;
 
         var connectionKey = (long.Parse(DateTimeKey) ^ ConnectionParameters.LoginCode)
             .ToString().ConvertToBase64().ConvertToBase64();
 
         var responsePackage = await SendAndGetReply<JObject>(RequestPackage.Ping(connectionKey));
         RefreshCryptoTransforms(responsePackage.Content["key"].ToString());
+
+        return true;
     }
 
-    public async Task Disconnect()
+    public async Task<bool> Disconnect()
     {
         await SendAndGetReply<JObject>(new("END"));
-        await TcpClient.DisconnectAsync();
+        return await TcpClient.DisconnectAsync();
     }
 
     public async Task<ResponsePackage<TClass>> SendAndGetReply<TClass>(RequestPackage request)
@@ -152,7 +157,6 @@ public class OMMSCentralClient :IDisposable
             EncryptorCryptoTransform.Dispose();
             DecryptorCryptoTransform.Dispose();
 
-            ConnectionParameters = null;
             DateTimeKey = null;
 
             disposedValue = true;

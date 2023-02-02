@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
+using OMMS.Desktop.Components;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,6 +21,8 @@ namespace OMMS.Desktop;
 
 public partial class App : Application
 {
+    public static Configuration Configuration { get; private set; } = Configuration.Load();
+
     public App()
     {
         this.InitializeComponent();

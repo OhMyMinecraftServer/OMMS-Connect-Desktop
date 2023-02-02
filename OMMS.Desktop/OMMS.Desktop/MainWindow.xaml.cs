@@ -19,6 +19,8 @@ namespace OMMS.Desktop;
 
 public sealed partial class MainWindow : WindowEx
 {
+    public static XamlRoot XamlRoot { get; private set; }
+
     public MainWindow()
     {
         this.InitializeComponent();
@@ -51,5 +53,10 @@ public sealed partial class MainWindow : WindowEx
 
         grid.SetValue(Grid.RowSpanProperty, toggleButton.IsChecked.GetValueOrDefault(false) ? 3 : 1);
         fontIcon.Glyph = toggleButton.IsChecked.GetValueOrDefault(false) ? "\ue70e" : "\ue70d";
+    }
+
+    private void Grid_Loaded(object sender, RoutedEventArgs e)
+    {
+        XamlRoot = ((Grid)sender).XamlRoot;
     }
 }

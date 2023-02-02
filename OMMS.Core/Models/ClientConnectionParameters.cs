@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OMMS.Core.Models;
 
-public class ClientConnectionParameters
+public struct ClientConnectionParameters
 {
     public int LoginCode { get; set; }
 

@@ -13,6 +13,7 @@
             <!--  Other app resources here  -->
             <converters:DiskDisplayValueConverter x:Key="DiskDisplayValueConverter" />
             <converters:MemoryInfoConverter x:Key="MemoryInfoConverter" />
+            <converters:NullVisibilityConverter x:Key="NullVisibilityConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
